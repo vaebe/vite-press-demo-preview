@@ -20,7 +20,7 @@ const Demo = isClient
 const codeHtml = ref('')
 codeToHtml(sourceCode, {
   lang: 'vue',
-   themes: { 
+  themes: {
     light: 'github-light',
     dark: 'github-dark',
   }
@@ -63,18 +63,22 @@ const copyCode = async () => {
       <button @click="toggleExpand" class="action-button">
         {{ isExpanded ? '收起代码' : '展开代码' }}
       </button>
-      <button @click="copyCode" class="action-button copy-button" :class="{ success: copyStatus === 'success', error: copyStatus === 'error' }">
+      <button @click="copyCode" class="action-button copy-button"
+        :class="{ success: copyStatus === 'success', error: copyStatus === 'error' }">
         {{ copyStatus === 'success' ? '已复制' : copyStatus === 'error' ? '复制失败' : '复制代码' }}
       </button>
     </div>
 
+
     <transition name="slide">
-      <div v-show="isExpanded" v-html="codeHtml" class="demo-source"></div>
+      <div class="demo-source">
+        <div v-show="isExpanded" v-html="codeHtml"></div>
+      </div>
     </transition>
   </div>
 </template>
 
-<style >
+<style>
 html.dark .demo-preview .shiki,
 html.dark .demo-preview .shiki span {
   color: var(--shiki-dark) !important;
@@ -88,7 +92,7 @@ html.dark .demo-preview .shiki span {
 .demo-preview {
   border: 1px solid #ddd;
   border-radius: 4px;
-  overflow: hidden;  
+  overflow: hidden;
 }
 
 .demo-render {
@@ -133,6 +137,7 @@ html.dark .demo-preview .shiki span {
 
 .demo-source {
   font-size: 14px;
+  overflow: scroll;
 }
 
 .demo-source pre {
