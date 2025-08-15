@@ -1,0 +1,23 @@
+{
+  "name": "vitepress-demo-plugin",
+  "version": "1.0.0",
+  "description": "A VitePress plugin for demo preview with code display and copy functionality",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [
+    "vitepress",
+    "plugin",
+    "demo",
+    "preview",
+    "vue"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "shiki": "^0.14.0"
+  },
+  "peerDependencies": {
+    "vitepress": "^1.0.0",
+    "vue": "^3.0.0"
+  }
+}
