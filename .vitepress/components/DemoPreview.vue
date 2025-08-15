@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { reactive, onMounted, defineAsyncComponent } from 'vue'
+import { ref, defineAsyncComponent } from 'vue'
 import { data as demosData } from '../data/demos.data.js'
-import { defineClientComponent, useData } from 'vitepress'
-import { createHighlighter } from 'shiki'
+import { defineClientComponent } from 'vitepress'
+import { codeToHtml } from 'shiki'
 
 const { src, isClient = false } = defineProps<{ src: string, isClient?: Boolean }>()
 
@@ -17,32 +17,15 @@ const Demo = isClient
   : defineAsyncComponent(componentModules[`${demoBaseFilePath}/${src}`])
 
 
-const codeHtml = reactive({
-  light: '',
-  dark: ''
-})
-
-const { isDark } = useData()
-
-async function load() {
-  const highlighter = await createHighlighter({
-    themes: ['github-light', 'github-dark'],
-    langs: ['vue', 'ts', 'javascript', 'html', 'css']
-  })
-
-  codeHtml.light = highlighter.codeToHtml(sourceCode, {
-    lang: 'vue',
-    theme: 'github-light'
-  })
-
-  codeHtml.dark = highlighter.codeToHtml(sourceCode, {
-    lang: 'vue',
-    theme: 'github-dark'
-  })
-}
-
-onMounted(() => {
-  load()
+const codeHtml = ref('')
+codeToHtml(sourceCode, {
+  lang: 'vue',
+   themes: { 
+    light: 'github-light',
+    dark: 'github-dark',
+  }
+}).then((res: string) => {
+  codeHtml.value = res
 })
 </script>
 
@@ -52,18 +35,25 @@ onMounted(() => {
       <Demo></Demo>
     </div>
 
-    <div v-if="sourceCode">
-      <div v-if="isDark" v-html="codeHtml.dark" class="demo-source"></div>
-      <div v-else v-html="codeHtml.light" class="demo-source"/>
-    </div>
+    <div v-html="codeHtml" class="demo-source"></div>
   </div>
 </template>
 
-<style scoped>
+<style >
+html.dark .demo-preview .shiki,
+html.dark .demo-preview .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  /* 可选，如果你还希望同步字体样式 */
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
 .demo-preview {
   border: 1px solid #ddd;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: hidden;  
 }
 
 .demo-render {

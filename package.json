@@ -9,6 +9,7 @@
     "preview": "vitepress preview"
   },
   "dependencies": {
+    "@opentiny/fluent-editor": "^3.25.4",
     "shiki": "^3.9.2"
   },
   "pnpm": {

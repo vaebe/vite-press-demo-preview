@@ -1,11 +1,11 @@
-# Demo Preview Test
+# vitePress demo 组件预览示例
 
 使用源代码预览 Vue 组件
 
-## Component A Demo
+## 使用客户端渲染 demo
 
-<DemoPreview src="demo-test.vue" />
+<DemoPreview src="client-demo.vue" :isClient="true" />
 
-## Component B Demo
+## 默认使用服务端渲染
 
 <DemoPreview src="component-b.vue" />
